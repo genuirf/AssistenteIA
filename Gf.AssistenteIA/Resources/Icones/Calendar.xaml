@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="Gf.AssistenteIA.Icones.Calendar"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                mc:Ignorable="d"
+                d:DesignHeight="32"
+                d:DesignWidth="32"
+                Name="root">
+    <Grid>
+        <Viewbox Width="{Binding ElementName=root, Path=ActualWidth}"
+                 Height="{Binding ElementName=root, Path=ActualHeight}">
+            <Canvas Width="24"
+                    Height="24">
+                <Canvas.Resources>
+                    <Style TargetType="Rectangle">
+                        <Setter Property="StrokeThickness"
+                                Value="2" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=root, Path=FontWeight}"
+                                         Value="Normal">
+                                <Setter Property="StrokeThickness"
+                                        Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="Path">
+                        <Setter Property="StrokeThickness"
+                                Value="2" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=root, Path=FontWeight}"
+                                         Value="Normal">
+                                <Setter Property="StrokeThickness"
+                                        Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="Line">
+                        <Setter Property="StrokeThickness"
+                                Value="2" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=root, Path=FontWeight}"
+                                         Value="Normal">
+                                <Setter Property="StrokeThickness"
+                                        Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Canvas.Resources>
+
+                <!-- Retângulo principal -->
+                <Rectangle Width="18"
+                           Height="18"
+                           Canvas.Left="3"
+                           Canvas.Top="4"
+                           Stroke="{Binding ElementName=root, Path=Foreground}"
+                           RadiusX="2"
+                           RadiusY="2" />
+                <!-- Linha vertical direita -->
+                <Line X1="16"
+                      Y1="2"
+                      X2="16"
+                      Y2="6"
+                      Stroke="{Binding ElementName=root, Path=Foreground}"
+                      StrokeStartLineCap="Round"
+                      StrokeEndLineCap="Round" />
+                <!-- Linha vertical esquerda -->
+                <Line X1="8"
+                      Y1="2"
+                      X2="8"
+                      Y2="6"
+                      Stroke="{Binding ElementName=root, Path=Foreground}"
+                      StrokeStartLineCap="Round"
+                      StrokeEndLineCap="Round" />
+                <!-- Linha horizontal superior -->
+                <Line X1="3"
+                      Y1="10"
+                      X2="21"
+                      Y2="10"
+                      Stroke="{Binding ElementName=root, Path=Foreground}"
+                      StrokeStartLineCap="Round"
+                      StrokeEndLineCap="Round" />
+            </Canvas>
+        </Viewbox>
+    </Grid>
+</UserControl>

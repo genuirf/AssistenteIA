@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="Gf.AssistenteIA.Icones.Database"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                mc:Ignorable="d"
+                d:DesignHeight="32"
+                d:DesignWidth="32"
+                Name="root">
+    <Grid>
+        <Viewbox Width="{Binding ElementName=root, Path=ActualWidth}"
+                 Height="{Binding ElementName=root, Path=ActualHeight}">
+            <Canvas Width="24"
+                    Height="24">
+                <Canvas.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="StrokeThickness"
+                                Value="2" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=root, Path=FontWeight}"
+                                         Value="Normal">
+                                <Setter Property="StrokeThickness"
+                                        Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="Path">
+                        <Setter Property="StrokeThickness"
+                                Value="2" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=root, Path=FontWeight}"
+                                         Value="Normal">
+                                <Setter Property="StrokeThickness"
+                                        Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Canvas.Resources>
+                <!-- Elipse superior -->
+                <Ellipse Width="18"
+                         Height="6"
+                         Canvas.Left="3"
+                         Canvas.Top="2"
+                         Stroke="{Binding ElementName=root, Path=Foreground}" />
+                <!-- Caminho central -->
+                <Path Stroke="{Binding ElementName=root, Path=Foreground}"
+                      StrokeEndLineCap="Round"
+                      Data="M21,12c0,1.66-4,3-9,3s-9-1.34-9-3" />
+                <!-- Caminho do contorno -->
+                <Path Stroke="{Binding ElementName=root, Path=Foreground}"
+                      StrokeStartLineCap="Round"
+                      StrokeEndLineCap="Round"
+                      Data="M3,5v14c0,1.66,4,3,9,3s9-1.34,9-3V5" />
+
+            </Canvas>
+        </Viewbox>
+    </Grid>
+</UserControl>

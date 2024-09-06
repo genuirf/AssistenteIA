@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Gf.AssistenteIA.Icones.Stop"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                mc:Ignorable="d"
+                d:DesignHeight="32"
+                d:DesignWidth="32"
+                Name="root">
+    <Grid>
+        <Viewbox Width="{Binding ElementName=root, Path=ActualWidth}"
+                 Height="{Binding ElementName=root, Path=ActualHeight}">
+            <Canvas Width="24"
+                    Height="24">
+
+                <!-- Quadrado central -->
+                <Rectangle Width="16"
+                           Height="16"
+                           Canvas.Left="4"
+                           Canvas.Top="4"
+                           Stroke="{Binding ElementName=root, Path=Foreground}"
+                           StrokeThickness="0"
+                           Fill="{Binding ElementName=root, Path=Foreground}" />
+            </Canvas>
+        </Viewbox>
+    </Grid>
+</UserControl>
