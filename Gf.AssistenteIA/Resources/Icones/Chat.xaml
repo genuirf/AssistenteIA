@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Gf.AssistenteIA.Icones.Chat"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                mc:Ignorable="d"
+                d:DesignHeight="32"
+                d:DesignWidth="32"
+                Name="root">
+    <Grid>
+        <Viewbox Width="{Binding ElementName=root, Path=ActualWidth}"
+                 Height="{Binding ElementName=root, Path=ActualHeight}">
+            <Canvas Width="24"
+                    Height="24">
+                <Canvas.Resources>
+                    <Style TargetType="Path">
+                        <Setter Property="StrokeThickness"
+                                Value="2" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=root, Path=FontWeight}"
+                                         Value="Normal">
+                                <Setter Property="StrokeThickness"
+                                        Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Canvas.Resources>
+
+                <!-- Pontos horizontais -->
+                <Path Data="M8,12 H8.009 M11.991,12 H12 M15.991,12 H16"
+                      Stroke="{Binding ElementName=root, Path=Foreground}"
+                      StrokeStartLineCap="Round"
+                      StrokeEndLineCap="Round"
+                      StrokeLineJoin="Round" />
+
+                <!-- Linha externa -->
+                <Path Data="M12,22 C17.5228,22 22,17.5228 22,12 C22,6.47715 17.5228,2 12,2 C6.47715,2 2,6.47715 2,12 C2,13.5997 2.37562,15.1116 3.04346,16.4525 C3.22094,16.8088 3.28001,17.2161 3.17712,17.6006 L2.58151,19.8267 C2.32295,20.793 3.20701,21.677 4.17335,21.4185 L6.39939,20.8229 C6.78393,20.72 7.19121,20.7791 7.54753,20.9565 C8.88837,21.6244 10.4003,22 12,22Z"
+                      Stroke="{Binding ElementName=root, Path=Foreground}" />
+            </Canvas>
+        </Viewbox>
+    </Grid>
+</UserControl>

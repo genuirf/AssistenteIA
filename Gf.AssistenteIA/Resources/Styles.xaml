@@ -1,0 +1,255 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="Titulo1" 
+           TargetType="TextBlock">
+        <Setter Property="Foreground"
+                Value="{StaticResource TextBrush}" />
+        <Setter Property="FontSize"
+                Value="10" />
+        <Setter Property="Height"
+                Value="Auto" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
+    </Style>
+    <Style x:Key="Titulo2" 
+           TargetType="TextBlock"
+           BasedOn="{StaticResource Titulo1}">
+        <Setter Property="FontSize"
+                Value="12" />
+    </Style>
+    <Style x:Key="Titulo3" 
+           TargetType="TextBlock"
+           BasedOn="{StaticResource Titulo1}">
+        <Setter Property="FontSize"
+                Value="14" />
+    </Style>
+    <Style x:Key="Titulo4" 
+           TargetType="TextBlock"
+           BasedOn="{StaticResource Titulo1}">
+        <Setter Property="FontSize"
+                Value="16" />
+    </Style>
+
+    <Style x:Key="Texto1" 
+           TargetType="TextBlock">
+        <Setter Property="Foreground"
+                Value="{StaticResource TextBrush}" />
+        <Setter Property="FontSize"
+                Value="10" />
+        <Setter Property="Height"
+                Value="Auto" />
+    </Style>
+    
+    <Style TargetType="Label">
+        <Setter Property="Foreground"
+                Value="{StaticResource TextBrush}" />
+        <Setter Property="FontSize"
+                Value="10" />
+        <Setter Property="Height"
+                Value="Auto" />
+    </Style>
+    <Style TargetType="Button">
+        <Setter Property="BorderBrush"
+                Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="Foreground"
+                Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="Background"
+                Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="Height"
+                Value="30" />
+        <Setter Property="Margin"
+                Value="1" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Cursor"
+                Value="Hand" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="15"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource PrimaryBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource PrimaryBrush}" />
+                            <Setter Property="Background"
+                                    Value="{StaticResource BackgroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource BackgroundBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource BackgroundBrush}" />
+                            <Setter Property="Background"
+                                    Value="{StaticResource PrimaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource DisabledBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource BackgroundBrush}" />
+                            <Setter Property="Background"
+                                    Value="{StaticResource DisabledBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ButtonRoundedInverse"
+           TargetType="Button"
+           BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="BorderBrush"
+                Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="Foreground"
+                Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="Background"
+                Value="{StaticResource BackgroundBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="BorderBrush"
+                        Value="{StaticResource BackgroundBrush}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource BackgroundBrush}" />
+                <Setter Property="Background"
+                        Value="{StaticResource PrimaryBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="BorderBrush"
+                        Value="{StaticResource PrimaryBrush}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource PrimaryBrush}" />
+                <Setter Property="Background"
+                        Value="{StaticResource BackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="BorderBrush"
+                        Value="{StaticResource DisabledBrush}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource BackgroundBrush}" />
+                <Setter Property="Background"
+                        Value="{StaticResource DisabledBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="TextBox">
+        <Setter Property="BorderBrush"
+                Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="Foreground"
+                Value="{StaticResource TextBrush}" />
+        <Setter Property="Background"
+                Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left" />
+        <Setter Property="Height"
+                Value="30" />
+        <Setter Property="Margin"
+                Value="1" />
+        <Setter Property="Padding"
+                Value="2" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            Opacity="{TemplateBinding Opacity}">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      VerticalScrollBarVisibility="Auto"
+                                      Margin="{TemplateBinding Padding}"
+                                      IsEnabled="{TemplateBinding IsEnabled}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource SecondaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource DisabledBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource DisabledBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Estilo para o Thumb do ScrollBar -->
+    <Style x:Key="TransparentScrollBarThumb"
+           TargetType="Thumb">
+        <Setter Property="Width"
+                Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border CornerRadius="5"
+                            Background="{DynamicResource PrimaryBrush}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Estilo para a barra de rolagem vertical -->
+    <Style x:Key="TransparentScrollBar"
+           TargetType="ScrollBar">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Width"
+                Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid x:Name="GridRoot"
+                          Background="Transparent"
+                          Width="10">
+                        <Track Name="PART_Track"
+                               IsDirectionReversed="true">
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource TransparentScrollBarThumb}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ScrollBar"
+           BasedOn="{StaticResource TransparentScrollBar}" />
+
+</ResourceDictionary>

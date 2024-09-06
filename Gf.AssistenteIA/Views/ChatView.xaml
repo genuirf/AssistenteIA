@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Gf.AssistenteIA.Views.ChatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Gf.AssistenteIA.Views"
+             xmlns:vm="clr-namespace:Gf.AssistenteIA.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             d:DataContext="{d:DesignInstance vm:ChatViewModel, IsDesignTimeCreatable=True}">
+    <StackPanel>
+        <Label>ChatView</Label>
+        <Button Command="{Binding NavigateToHomeCommand}">
+            Lista de Assistentes
+        </Button>
+    </StackPanel>
+</UserControl>

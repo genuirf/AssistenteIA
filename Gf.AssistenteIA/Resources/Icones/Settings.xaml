@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Gf.AssistenteIA.Icones.Settings"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                mc:Ignorable="d"
+                d:DesignHeight="32"
+                d:DesignWidth="32"
+                Name="root">
+    <Grid>
+        <Viewbox Width="{Binding ElementName=root, Path=ActualWidth}"
+                 Height="{Binding ElementName=root, Path=ActualHeight}">
+            <Canvas Width="24"
+                    Height="24">
+                <Canvas.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="StrokeThickness"
+                                Value="2" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=root, Path=FontWeight}"
+                                         Value="Normal">
+                                <Setter Property="StrokeThickness"
+                                        Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="Path">
+                        <Setter Property="StrokeThickness"
+                                Value="2" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=root, Path=FontWeight}"
+                                         Value="Normal">
+                                <Setter Property="StrokeThickness"
+                                        Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Canvas.Resources>
+
+                <!-- Círculo central -->
+                <Ellipse Width="6"
+                         Height="6"
+                         Canvas.Left="9"
+                         Canvas.Top="9"
+                         Stroke="{Binding ElementName=root, Path=Foreground}" />
+                <!-- Caminho da engrenagem -->
+                <Path Stroke="{Binding ElementName=root, Path=Foreground}"
+                      StrokeLineJoin="Round"
+                      Data="M19.4,15a1.65,1.65 0 0,0 .33,1.82l.06,.06a2,2 0 0,1 0 2.83 2,2 0 0,1-2.83,0l-.06-.06a1.65,1.65 0 0,0-1.82-.33 1.65,1.65 0 0,0-1,1.51V21a2,2 0 0,1-2 2 2,2 0 0,1-2-2v-.09A1.65,1.65 0 0,0 9,19.4a1.65,1.65 0 0,0-1.82.33l-.06,.06a2,2 0 0,1-2.83,0 2,2 0 0,1 0-2.83l.06-.06a1.65,1.65 0 0,0 .33-1.82 1.65,1.65 0 0,0-1.51-1H3a2,2 0 0,1-2-2 2,2 0 0,1 2-2h.09A1.65,1.65 0 0,0 4.6,9a1.65,1.65 0 0,0-.33-1.82l-.06-.06a2,2 0 0,1 0-2.83 2,2 0 0,1 2.83,0l.06.06a1.65,1.65 0 0,0 1.82.33H9a1.65,1.65 0 0,0 1-1.51V3a2,2 0 0,1 2-2 2,2 0 0,1 2 2v.09a1.65,1.65 0 0,0 1,1.51 1.65,1.65 0 0,0 1.82-.33l.06-.06a2,2 0 0,1 2.83,0 2,2 0 0,1 0,2.83l-.06.06a1.65,1.65 0 0,0-.33,1.82V9a1.65,1.65 0 0,0 1.51,1H21a2,2 0 0,1 2,2 2,2 0 0,1-2 2h-.09a1.65,1.65 0 0,0-1.51,1z" />
+
+            </Canvas>
+        </Viewbox>
+    </Grid>
+</UserControl>
