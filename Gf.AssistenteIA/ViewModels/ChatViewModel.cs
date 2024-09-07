@@ -8,15 +8,19 @@ namespace Gf.AssistenteIA.ViewModels
       public class ChatViewModel : ViewModelBase
       {
 
+            private readonly INavigationService _navigationService;
+            private readonly IDialogService _dialogService;
+
             // Construtor sem parâmetros para o modo design
             public ChatViewModel()
             {
                   Mensagens = [];
             }
-            public ChatViewModel(INavigationService navigationService, AssistenteModel assistente)
+            public ChatViewModel(INavigationService navigationService, IDialogService dialogService, AssistenteModel assistente)
             {
                   Mensagens = [];
                   _navigationService = navigationService;
+                  _dialogService = dialogService;
                   Assistente = assistente;
                   NavigateToHomeCommand = new RelayCommand(NavigateToAssistentes);
                   Titulo = assistente.Titulo;
@@ -34,13 +38,11 @@ namespace Gf.AssistenteIA.ViewModels
                   set => Set(value);
             }
 
-            private readonly INavigationService _navigationService;
-
             public ICommand NavigateToHomeCommand { get; }
 
             private void NavigateToAssistentes(object arg)
             {
-                  _navigationService.NavigateTo(new AssistentesViewModel(_navigationService));
+                  _navigationService.NavigateTo(new AssistentesViewModel(_navigationService, _dialogService));
             }
 
       }

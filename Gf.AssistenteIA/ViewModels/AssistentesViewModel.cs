@@ -1,4 +1,5 @@
-﻿using Gf.AssistenteIA.Services;
+﻿using Gf.AssistenteIA.Repositories;
+using Gf.AssistenteIA.Services;
 using Gf.AssistenteIA.Utils;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -8,7 +9,8 @@ namespace Gf.AssistenteIA.ViewModels
       public class AssistentesViewModel : ViewModelBase
       {
             private readonly INavigationService _navigationService;
-           
+            private readonly IDialogService _dialogService;
+
             // Construtor sem parâmetros para o modo design
             public AssistentesViewModel()
             {
@@ -20,11 +22,12 @@ namespace Gf.AssistenteIA.ViewModels
                   Assistentes.Add(new() { Titulo = "Teste 2", Descricao = "Descrição teste 2" });
 
             }
-            public AssistentesViewModel(INavigationService navigationService)
+            public AssistentesViewModel(INavigationService navigationService, IDialogService dialogService)
             {
                   Titulo = "Meus Assistentes";
                   Assistentes = [];
                   _navigationService = navigationService;
+                  _dialogService = dialogService;
                   OpenChatCommand = new RelayCommand(OpenChat, CanOpenChat);
                   EditAssistenteCommand = new RelayCommand(EditAssistente, CanEditAssistente);
                   DeleteAssistenteCommand = new RelayCommand(DeleteAssistente, CanDeleteAssistente);
@@ -59,7 +62,7 @@ namespace Gf.AssistenteIA.ViewModels
                   if (parameter is AssistenteModel assistente)
                   {
                         // Navegar para a tela de chat usando o assistente selecionado
-                        _navigationService.NavigateTo(new ChatViewModel(_navigationService, assistente));
+                        _navigationService.NavigateTo(new ChatViewModel(_navigationService, _dialogService, assistente));
                   }
             }
             private bool CanOpenChat(object parameter)
@@ -71,7 +74,7 @@ namespace Gf.AssistenteIA.ViewModels
             {
                   if (parameter is AssistenteModel assistente)
                   {
-                        _navigationService.NavigateTo(new EditAssistenteViewModel(_navigationService, assistente));
+                        _navigationService.NavigateTo(new EditAssistenteViewModel(_navigationService, _dialogService, assistente));
                   }
             }
             private bool CanEditAssistente(object parameter)
@@ -83,7 +86,22 @@ namespace Gf.AssistenteIA.ViewModels
             {
                   if (parameter is AssistenteModel assistente)
                   {
+                        bool confirmDelete = _dialogService.Confirm($"Tem certeza de que deseja excluir o assistente '{assistente.Titulo}'?", "Confirmar Exclusão");
 
+                        if (confirmDelete)
+                        {
+                              try
+                              {
+                                    var repository = new FileAssistantRepository();
+                                    repository.Delete(assistente.Id);
+
+                                    Assistentes.Remove(assistente);
+                              }
+                              catch (Exception ex)
+                              {
+                                    // TODO adicionar ao Logger
+                              }
+                        }
                   }
             }
             private bool CanDeleteAssistente(object parameter)
@@ -93,7 +111,7 @@ namespace Gf.AssistenteIA.ViewModels
 
             private void AddAssitente(object parameter)
             {
-                  _navigationService.NavigateTo(new EditAssistenteViewModel(_navigationService, new() { Id = Guid.NewGuid()}));
+                  _navigationService.NavigateTo(new EditAssistenteViewModel(_navigationService, _dialogService, new() { Id = Guid.NewGuid()}));
             }
       }
 }

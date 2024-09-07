@@ -1,21 +1,41 @@
 ﻿using Gf.AssistenteIA.Services;
 using Gf.AssistenteIA.Utils;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Navigation;
 
 namespace Gf.AssistenteIA.ViewModels
 {
       public class MainViewModel : ViewModelBase
       {
+            // Construtor sem parâmetros para o modo design
             public MainViewModel()
             {
                   base.Titulo = "GF Chat IA";
-                  // Criação do serviço de navegação e configuração do ViewModel inicial
-                  var navigationService = new NavigationService(this);
 
-                  // Iniciar com a AssistantsViewModel, passando o serviço de navegação
-                  CurrentViewModel = new AssistentesViewModel(navigationService);
+                  CurrentViewModel = new AssistentesViewModel();
+            }
+
+            private readonly INavigationService _navigationService;
+            private readonly IDialogService _dialogService;
+
+            public MainViewModel(INavigationService navigationService, IDialogService dialogService)
+            {
+                  _navigationService = navigationService;
+                  _dialogService = dialogService;
+                  base.Titulo = "GF Chat IA";
+
+                  _navigationService.OnNavigateTo += HandleNavigation;
+
+                  CurrentViewModel = new AssistentesViewModel(navigationService, dialogService);
 
                   this.PropertyChangedOn(nameof(Titulo), [nameof(CurrentViewModel)]);
             }
+
+            private void HandleNavigation(ViewModelBase viewModel)
+            {
+                  CurrentViewModel = viewModel;
+            }
+
             public new string Titulo
             {
                   get

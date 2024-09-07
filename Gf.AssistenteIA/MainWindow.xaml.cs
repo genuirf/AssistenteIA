@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Gf.AssistenteIA.ViewModels;
+using System.Windows;
 
 namespace Gf.AssistenteIA
 {
@@ -7,9 +8,10 @@ namespace Gf.AssistenteIA
       /// </summary>
       public partial class MainWindow : Window
       {
-            public MainWindow()
+            public MainWindow(MainViewModel mainViewModel)
             {
                   InitializeComponent();
+                  DataContext = mainViewModel;
             }
       }
 }
