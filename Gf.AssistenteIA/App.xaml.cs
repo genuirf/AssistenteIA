@@ -7,6 +7,7 @@ using System.Data;
 using System.Windows;
 using Gf.AssistenteIA.Views;
 using System;
+using ChatIA.Model.Recursos;
 
 namespace Gf.AssistenteIA
 {
@@ -42,6 +43,9 @@ namespace Gf.AssistenteIA
                   // Registrando o repositório de assistentes. Se ele não tiver estado específico por tela/usuário, Singleton é suficiente
                   services.AddTransient<IAssistantRepository, FileAssistantRepository>();
 
+                  // Registrando o repositório de embeddings.
+                  services.AddTransient<EmbeddingService>();
+
                   // Views são melhor registradas como Transient, pois podem ser criadas e destruídas conforme necessário
                   services.AddSingleton<MainWindow>();
                   services.AddTransient<AssistentesView>();
@@ -53,6 +57,10 @@ namespace Gf.AssistenteIA
                   services.AddTransient<AssistentesViewModel>();
                   services.AddTransient<EditAssistenteViewModel>();
                   services.AddTransient<ChatViewModel>();
+
+                  // Registroando API
+                  services.AddTransient<IAssistenteService, LMStudioService>();
+
             }
       }
 

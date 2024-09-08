@@ -9,5 +9,10 @@ namespace Gf.AssistenteIA.Services
                   var result = MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
                   return result == MessageBoxResult.Yes;
             }
+
+            public void Error(string message, Exception exception)
+            {
+                  MessageBox.Show(message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
       }
 }

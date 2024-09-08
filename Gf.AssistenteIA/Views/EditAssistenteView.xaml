@@ -18,11 +18,8 @@
         <StackPanel>
             <Label>Nome do Assistente</Label>
             <TextBox Text="{Binding Assistente.Titulo}" />
-            <Label>Nome do Assistente</Label>
-            <TextBox Text="{Binding Assistente.Descricao}"
-                     AcceptsReturn="True"
-                     Height="100"
-                     VerticalContentAlignment="Top"/>
+            <Label>Descrição</Label>
+            <TextBox Text="{Binding Assistente.Descricao}"/>
             <Label>Instruções para o Assistente</Label>
             <TextBox Text="{Binding Assistente.Instrucoes}"
                      AcceptsReturn="True"
@@ -40,7 +37,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <Label>API Url (LM Studio)</Label>
+                    <Label>API Url (LM Studio | Ex.: http://localhost:1234)</Label>
                     <TextBox Text="{Binding Assistente.Api_Url}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1">

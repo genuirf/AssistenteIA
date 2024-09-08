@@ -22,6 +22,11 @@
                   get => Get<string>();
                   set => Set(value);
             }
+            public string Api_Token
+            {
+                  get => Get<string>();
+                  set => Set(value);
+            }
             public double Temperature
             {
                   get => Get<double>();

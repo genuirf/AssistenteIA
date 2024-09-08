@@ -1,6 +1,7 @@
 ﻿using Gf.AssistenteIA.Repositories;
 using Gf.AssistenteIA.Services;
 using Gf.AssistenteIA.Utils;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -62,7 +63,7 @@ namespace Gf.AssistenteIA.ViewModels
                   if (parameter is AssistenteModel assistente)
                   {
                         // Navegar para a tela de chat usando o assistente selecionado
-                        _navigationService.NavigateTo(new ChatViewModel(_navigationService, _dialogService, assistente));
+                        _navigationService.NavigateTo(new ChatViewModel(App.ServiceProvider, _navigationService, _dialogService, assistente));
                   }
             }
             private bool CanOpenChat(object parameter)
