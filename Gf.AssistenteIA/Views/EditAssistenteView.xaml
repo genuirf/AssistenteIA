@@ -24,11 +24,13 @@
             <TextBox Text="{Binding Assistente.Instrucoes}"
                      AcceptsReturn="True"
                      Height="100"
+                     TextWrapping="WrapWithOverflow"
                      VerticalContentAlignment="Top"/>
             <Label>Instruções para quando não houver contexto encontrado</Label>
             <TextBox Text="{Binding Assistente.InstrucoesSemContexto}"
                      AcceptsReturn="True"
                      Height="100"
+                     TextWrapping="WrapWithOverflow"
                      VerticalContentAlignment="Top"/>
             <Grid>
                 <Grid.ColumnDefinitions>

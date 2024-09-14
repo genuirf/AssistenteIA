@@ -95,51 +95,22 @@ namespace Gf.AssistenteIA.Services
                                                       responseStream.Close();
                                                       break;
                                                 }
-                                                // Verifica se a linha começa com "data:"
-                                                if (line.StartsWith("data:"))
+                                                try
                                                 {
-                                                      // Remove o prefixo "data:" e faz o trim
-                                                      var json = line.Substring(5).Trim();
-
-                                                      // Verifica se a string JSON não está vazia
-                                                      if (!string.IsNullOrWhiteSpace(json))
+                                                      string? msgStream = ParseTextResponse(line);
+                                                      if (msgStream == null)
                                                       {
-                                                            // Verifica se a linha é o final do stream
-                                                            if (json.Equals("[DONE]", StringComparison.OrdinalIgnoreCase))
-                                                            {
-                                                                  onStreamMsg("\n\n");
-                                                                  break;
-                                                            }
-
-                                                            // Analisa o JSON
-                                                            try
-                                                            {
-                                                                  using (JsonDocument jsonDoc = JsonDocument.Parse(json))
-                                                                  {
-                                                                        // Tenta acessar o array de escolhas
-                                                                        if (jsonDoc.RootElement.TryGetProperty("choices", out var choicesArray))
-                                                                        {
-                                                                              foreach (var choice in choicesArray.EnumerateArray())
-                                                                              {
-                                                                                    if (choice.TryGetProperty("delta", out var delta))
-                                                                                    {
-                                                                                          if (delta.TryGetProperty("content", out var contentProp))
-                                                                                          {
-                                                                                                string contentValue = contentProp.GetString() ?? "";
-                                                                                                onStreamMsg(contentValue);
-                                                                                                resposta.Append(contentValue);
-                                                                                                //Thread.Sleep(80);
-                                                                                          }
-                                                                                    }
-                                                                              }
-                                                                        }
-                                                                  }
-                                                            }
-                                                            catch (JsonException ex)
-                                                            {
-                                                                  Console.WriteLine($"Erro ao processar o JSON: {ex.Message}");
-                                                            }
+                                                            onStreamMsg("\n");
+                                                            break;
                                                       }
+
+                                                      onStreamMsg(msgStream);
+                                                      resposta.Append(msgStream);
+                                                }
+                                                catch (JsonException ex)
+                                                {
+                                                      Console.WriteLine($"Erro ao processar o JSON: {ex.Message}");
+                                                      // TODO adicionar ao Logger
                                                 }
                                           }
                                     }
@@ -162,6 +133,44 @@ namespace Gf.AssistenteIA.Services
                         onStop?.Invoke();
                   }
 
+                  return string.Empty;
+            }
+
+            private string? ParseTextResponse(string line)
+            {
+                  if (line.StartsWith("data:"))
+                  {
+                        // Remove o prefixo "data:" e faz o trim
+                        var json = line.Substring(5).Trim();
+
+                        // Verifica se a string JSON não está vazia
+                        if (!string.IsNullOrWhiteSpace(json))
+                        {
+                              // Verifica se a linha é o final do stream
+                              if (json.Equals("[DONE]", StringComparison.OrdinalIgnoreCase))
+                              {
+                                    return null;
+                              }
+                              using (JsonDocument jsonDoc = JsonDocument.Parse(json))
+                              {
+                                    // Tenta acessar o array de escolhas
+                                    if (jsonDoc.RootElement.TryGetProperty("choices", out var choicesArray))
+                                    {
+                                          foreach (var choice in choicesArray.EnumerateArray())
+                                          {
+                                                if (choice.TryGetProperty("delta", out var delta))
+                                                {
+                                                      if (delta.TryGetProperty("content", out var contentProp))
+                                                      {
+                                                            string contentValue = contentProp.GetString() ?? "";
+                                                            return contentValue;
+                                                      }
+                                                }
+                                          }
+                                    }
+                              }
+                        }
+                  }
                   return string.Empty;
             }
 

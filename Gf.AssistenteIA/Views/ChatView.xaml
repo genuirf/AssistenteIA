@@ -10,182 +10,182 @@
              d:DesignHeight="600"
              d:DesignWidth="900"
              d:DataContext="{d:DesignInstance vm:ChatViewModel, IsDesignTimeCreatable=True}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+      <Grid>
+            <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="350" />
+                  <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Grid>
-                <Button BorderThickness="0"
-                        HorizontalAlignment="Right"
-                        Command="{Binding AddChatCommand}"
-                        Width="40"
-                        Height="40">
-                    <Button.Style>
-                        <Style TargetType="Button"
-                               BasedOn="{StaticResource ButtonRoundedInverse}">
-                            <Style.Triggers>
-                                <Trigger Property="IsPressed"
-                                         Value="True">
-                                    <Setter Property="FocusManager.FocusedElement"
-                                            Value="{Binding ElementName=TbQuestao}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <icon:ChatPlus Width="24"
-                                   Height="24" />
-                </Button>
+                  <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                  </Grid.RowDefinitions>
+                  <Grid>
+                        <Button BorderThickness="0"
+                                HorizontalAlignment="Right"
+                                Command="{Binding AddChatCommand}"
+                                Width="40"
+                                Height="40">
+                              <Button.Style>
+                                    <Style TargetType="Button"
+                                           BasedOn="{StaticResource ButtonRoundedInverse}">
+                                          <Style.Triggers>
+                                                <Trigger Property="IsPressed"
+                                                         Value="True">
+                                                      <Setter Property="FocusManager.FocusedElement"
+                                                              Value="{Binding ElementName=TbQuestao}" />
+                                                </Trigger>
+                                          </Style.Triggers>
+                                    </Style>
+                              </Button.Style>
+                              <icon:ChatPlus Width="24"
+                                             Height="24" />
+                        </Button>
+                  </Grid>
+                  <ScrollViewer Grid.Row="1">
+                        <ItemsControl ItemsSource="{Binding Chats}">
+                              <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                          <Border>
+                                                <Grid>
+                                                      <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                      </Grid.ColumnDefinitions>
+                                                      <Button Content="{Binding Titulo, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"
+                                                              Style="{StaticResource ButtonRoundedInverse}"
+                                                              Command="{Binding DataContext.ActivateChatCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                              CommandParameter="{Binding}"
+                                                              HorizontalContentAlignment="Left"
+                                                              BorderThickness="0" />
+                                                      <Button Style="{StaticResource ButtonRoundedInverse}"
+                                                              BorderThickness="0"
+                                                              Grid.Column="1"
+                                                              Command="{Binding DataContext.EditChatCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                              CommandParameter="{Binding}"
+                                                              Width="30"
+                                                              Height="30">
+                                                            <icon:Edit Width="16"
+                                                                       Height="16" />
+                                                      </Button>
+                                                      <Button Style="{StaticResource ButtonRoundedInverse}"
+                                                              BorderThickness="0"
+                                                              Grid.Column="2"
+                                                              Command="{Binding DataContext.DeleteChatCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                              CommandParameter="{Binding}"
+                                                              Width="30"
+                                                              Height="30">
+                                                            <icon:Trash Width="16"
+                                                                        Height="16" />
+                                                      </Button>
+                                                </Grid>
+                                          </Border>
+                                    </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                  </ScrollViewer>
             </Grid>
-            <ScrollViewer Grid.Row="1">
-                <ItemsControl ItemsSource="{Binding Chats}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Button Content="{Binding Titulo, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"
-                                            Style="{StaticResource ButtonRoundedInverse}"
-                                            Command="{Binding DataContext.ActivateChatCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                            CommandParameter="{Binding}"
-                                            HorizontalContentAlignment="Left"
-                                            BorderThickness="0" />
-                                    <Button Style="{StaticResource ButtonRoundedInverse}"
-                                            BorderThickness="0"
-                                            Grid.Column="1"
-                                            Command="{Binding DataContext.EditChatCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                            CommandParameter="{Binding}"
-                                            Width="30"
-                                            Height="30">
-                                        <icon:Edit Width="16"
-                                                   Height="16" />
-                                    </Button>
-                                    <Button Style="{StaticResource ButtonRoundedInverse}"
-                                            BorderThickness="0"
-                                            Grid.Column="2"
-                                            Command="{Binding DataContext.DeleteChatCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                            CommandParameter="{Binding}"
-                                            Width="30"
-                                            Height="30">
-                                        <icon:Trash Width="16"
-                                                    Height="16" />
-                                    </Button>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid>
-                <WrapPanel>
-                    <Button Command="{Binding AddDocumentsCommand}"
-                            Style="{StaticResource ButtonRoundedInverse}"
-                            HorizontalAlignment="Right"
-                            Width="150">
+            <Grid Grid.Column="1">
+                  <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                  </Grid.RowDefinitions>
+                  <Grid>
                         <WrapPanel>
-                            <TextBlock Text="Documentos"
-                                       VerticalAlignment="Center"
-                                       Margin="0,0,6,0" />
-                            <icon:Report Width="20"
-                                         Height="20" />
-                        </WrapPanel>
-                    </Button>
+                              <Button Command="{Binding AddDocumentsCommand}"
+                                      Style="{StaticResource ButtonRoundedInverse}"
+                                      HorizontalAlignment="Right"
+                                      Width="150">
+                                    <WrapPanel>
+                                          <TextBlock Text="Documentos"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,6,0" />
+                                          <icon:Report Width="20"
+                                                       Height="20" />
+                                    </WrapPanel>
+                              </Button>
 
-                </WrapPanel>
-                <Button Command="{Binding NavigateToHomeCommand}"
-                        Style="{StaticResource ButtonRoundedInverse}"
-                        HorizontalAlignment="Right"
-                        Width="150">
-                    <WrapPanel>
-                        <TextBlock Text="Assistentes"
-                                   VerticalAlignment="Center"
-                                   Margin="0,0,6,0" />
-                        <icon:ArrowRight Width="20"
-                                         Height="20" />
-                    </WrapPanel>
-                </Button>
+                        </WrapPanel>
+                        <Button Command="{Binding NavigateToHomeCommand}"
+                                Style="{StaticResource ButtonRoundedInverse}"
+                                HorizontalAlignment="Right"
+                                Width="150">
+                              <WrapPanel>
+                                    <TextBlock Text="Assistentes"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,6,0" />
+                                    <icon:ArrowRight Width="20"
+                                                     Height="20" />
+                              </WrapPanel>
+                        </Button>
+                  </Grid>
+                  <ScrollViewer Grid.Row="1">
+                        <ScrollViewer x:Name="scrollViewerMensagens">
+                              <ItemsControl ItemsSource="{Binding CurrentChat.Mensagens}">
+                                    <ItemsControl.ItemTemplate>
+                                          <DataTemplate>
+                                                <Border Margin="2"
+                                                        CornerRadius="4"
+                                                        BorderThickness="1"
+                                                        BorderBrush="{StaticResource DisabledBrush}">
+                                                      <StackPanel>
+                                                            <Label FontWeight="Bold">Você:</Label>
+                                                            <TextBlock Text="{Binding MensagemUsuario}"
+                                                                       Style="{StaticResource Texto1}"
+                                                                       Margin="5, 0" />
+                                                            <Rectangle  Margin="2"
+                                                                        Height="1"
+                                                                        Fill="{StaticResource SecondaryBrush}" />
+                                                            <Label FontWeight="Bold">Assistente:</Label>
+                                                            <TextBox Text="{Binding MensagemAssistente}"
+                                                                     Height="Auto"
+                                                                     IsReadOnly="True"
+                                                                     BorderThickness="0"
+                                                                     VerticalScrollBarVisibility="Disabled"
+                                                                     TextWrapping="WrapWithOverflow"
+                                                                     PreviewMouseWheel="TextBox_PreviewMouseWheel" />
+                                                      </StackPanel>
+                                                </Border>
+                                          </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                              </ItemsControl>
+                        </ScrollViewer>
+                  </ScrollViewer>
+                  <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                              <ColumnDefinition />
+                              <ColumnDefinition Width="Auto" />
+                              <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="TbQuestao"
+                                 Text="{Binding CurrentChat.Questao, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="{Binding GeneratingResponse}"
+                                 Height="60"
+                                 VerticalContentAlignment="Top"
+                                 TextWrapping="WrapWithOverflow"
+                                 VerticalScrollBarVisibility="Auto"
+                                 PreviewKeyDown="TbQuestao_PreviewKeyDown" />
+                        <Button Style="{StaticResource ButtonRoundedInverse}"
+                                BorderThickness="0"
+                                Grid.Column="1"
+                                Command="{Binding SendMsgCommand}"
+                                Width="40"
+                                Height="40">
+                              <icon:SendMsg Width="24"
+                                            Height="24" />
+                        </Button>
+                        <Button Style="{StaticResource ButtonRoundedInverse}"
+                                BorderThickness="0"
+                                Grid.Column="2"
+                                Command="{Binding StopResponseCommand}"
+                                Width="40"
+                                Height="40">
+                              <icon:Stop Width="24"
+                                         Height="24" />
+                        </Button>
+                  </Grid>
             </Grid>
-            <ScrollViewer Grid.Row="1">
-                <ScrollViewer x:Name="scrollViewerMensagens">
-                    <ItemsControl ItemsSource="{Binding CurrentChat.Mensagens}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Margin="2"
-                                        CornerRadius="4"
-                                        BorderThickness="1"
-                                        BorderBrush="{StaticResource DisabledBrush}">
-                                    <StackPanel>
-                                        <Label FontWeight="Bold">Você:</Label>
-                                        <TextBlock Text="{Binding MensagemUsuario}"
-                                                   Style="{StaticResource Texto1}"
-                                                   Margin="5, 0"/>
-                                        <Rectangle  Margin="2"
-                                                    Height="1"
-                                                    Fill="{StaticResource SecondaryBrush}" />
-                                        <Label FontWeight="Bold">Assistente:</Label>
-                                        <TextBox Text="{Binding MensagemAssistente}"
-                                                 Height="Auto"
-                                                 IsReadOnly="True" 
-                                                 BorderThickness="0"
-                                                 VerticalScrollBarVisibility="Disabled"
-                                                 TextWrapping="WrapWithOverflow"
-                                                 PreviewMouseWheel="TextBox_PreviewMouseWheel"/>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </ScrollViewer>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="TbQuestao"
-                         Text="{Binding CurrentChat.Questao, UpdateSourceTrigger=PropertyChanged}"
-                         IsReadOnly="{Binding GeneratingResponse}"
-                         Height="60"
-                         VerticalContentAlignment="Top"
-                         TextWrapping="WrapWithOverflow"
-                         VerticalScrollBarVisibility="Auto"
-                         PreviewKeyDown="TbQuestao_PreviewKeyDown"/>
-                <Button Style="{StaticResource ButtonRoundedInverse}"
-                        BorderThickness="0"
-                        Grid.Column="1"
-                        Command="{Binding SendMsgCommand}"
-                        Width="40"
-                        Height="40">
-                    <icon:SendMsg Width="24"
-                                  Height="24" />
-                </Button>
-                <Button Style="{StaticResource ButtonRoundedInverse}"
-                        BorderThickness="0"
-                        Grid.Column="2"
-                        Command="{Binding StopResponseCommand}"
-                        Width="40"
-                        Height="40">
-                    <icon:Stop Width="24"
-                               Height="24" />
-                </Button>
-            </Grid>
-        </Grid>
-    </Grid>
+      </Grid>
 </UserControl>

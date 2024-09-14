@@ -147,7 +147,27 @@ namespace Gf.AssistenteIA.ViewModels
 
             private async Task GerarTitulo()
             {
+                  try
+                  {
+                        Titulo = "";
+                        var historico = GetHistorico();
+                        var contexto = new StringBuilder();
+                        contexto.AppendLine($"[CONTEXT]");
+                        foreach (var item in historico)
+                        {
+                              contexto.AppendLine($"[USER] {item.MensagemUsuario}[END USER]");
+                              contexto.AppendLine($"[ASSISTANT] {item.MensagemAssistente}[END ASSISTANT]");
+                        }
+                        contexto.AppendLine($"[END CONTEXT]");
 
+                        string resposta = await _apiService.SendQuestionAsync(Assistente, "No máximo 5 palavras, qual \"assunto\" sugere com base no contexto?", historico, contexto.ToString(), (resp) =>
+                        {
+                              Titulo = $"{Titulo}{resp.Replace("\n", "")}";
+                        }, null);
+                  }
+                  catch (Exception ex)
+                  {
+                  }
             }
 
             private async Task<ContextoMensagem> GetContexto(string Questao)
