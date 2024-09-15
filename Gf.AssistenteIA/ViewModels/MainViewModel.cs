@@ -15,18 +15,20 @@ namespace Gf.AssistenteIA.ViewModels
                   CurrentViewModel = new AssistentesViewModel();
             }
 
+            private readonly IServiceProvider _serviceProvider;
             private readonly INavigationService _navigationService;
             private readonly IDialogService _dialogService;
 
-            public MainViewModel(INavigationService navigationService, IDialogService dialogService)
+            public MainViewModel(IServiceProvider serviceProvider, INavigationService navigationService, IDialogService dialogService)
             {
+                  _serviceProvider = serviceProvider;
                   _navigationService = navigationService;
                   _dialogService = dialogService;
                   base.Titulo = "GF Chat IA";
 
                   _navigationService.OnNavigateTo += HandleNavigation;
 
-                  CurrentViewModel = new AssistentesViewModel(navigationService, dialogService);
+                  CurrentViewModel = new AssistentesViewModel(_serviceProvider, _navigationService, _dialogService);
 
                   this.PropertyChangedOn(nameof(Titulo), [nameof(CurrentViewModel)]);
             }

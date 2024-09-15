@@ -2,6 +2,7 @@
 using Gf.AssistenteIA.Services;
 using Gf.AssistenteIA.Utils;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -9,6 +10,7 @@ namespace Gf.AssistenteIA.ViewModels
 {
       public class AssistentesViewModel : ViewModelBase
       {
+            private readonly IServiceProvider _serviceProvider;
             private readonly INavigationService _navigationService;
             private readonly IDialogService _dialogService;
 
@@ -23,14 +25,16 @@ namespace Gf.AssistenteIA.ViewModels
                   Assistentes.Add(new() { Titulo = "Teste 2", Descricao = "Descrição teste 2" });
 
             }
-            public AssistentesViewModel(INavigationService navigationService, IDialogService dialogService)
+            public AssistentesViewModel(IServiceProvider serviceProvider, INavigationService navigationService, IDialogService dialogService)
             {
                   Titulo = "Meus Assistentes";
                   Assistentes = [];
+                  _serviceProvider = serviceProvider;
                   _navigationService = navigationService;
                   _dialogService = dialogService;
                   OpenChatCommand = new RelayCommand(OpenChat, CanOpenChat);
                   EditAssistenteCommand = new RelayCommand(EditAssistente, CanEditAssistente);
+                  AddDocumentsCommand = new RelayCommand(AddDocuments, CanAddDocuments);
                   DeleteAssistenteCommand = new RelayCommand(DeleteAssistente, CanDeleteAssistente);
                   AddAssitenteCommand = new RelayCommand(AddAssitente);
 
@@ -55,6 +59,7 @@ namespace Gf.AssistenteIA.ViewModels
 
             public ICommand OpenChatCommand { get; }
             public ICommand EditAssistenteCommand { get; }
+            public ICommand AddDocumentsCommand { get; }
             public ICommand DeleteAssistenteCommand { get; }
             public ICommand AddAssitenteCommand { get; }
 
@@ -75,10 +80,22 @@ namespace Gf.AssistenteIA.ViewModels
             {
                   if (parameter is AssistenteModel assistente)
                   {
-                        _navigationService.NavigateTo(new EditAssistenteViewModel(_navigationService, _dialogService, assistente));
+                        _navigationService.NavigateTo(new EditAssistenteViewModel(_serviceProvider, _navigationService, _dialogService, this, assistente));
                   }
             }
             private bool CanEditAssistente(object parameter)
+            {
+                  return parameter is AssistenteModel;
+            }
+
+            private void AddDocuments(object parameter)
+            {
+                  if (parameter is AssistenteModel assistente)
+                  {
+                        _navigationService.NavigateTo(new DocsAssistenteViewModel(_serviceProvider, _navigationService, _dialogService, this, assistente));
+                  }
+            }
+            private bool CanAddDocuments(object parameter)
             {
                   return parameter is AssistenteModel;
             }
@@ -112,7 +129,7 @@ namespace Gf.AssistenteIA.ViewModels
 
             private void AddAssitente(object parameter)
             {
-                  _navigationService.NavigateTo(new EditAssistenteViewModel(_navigationService, _dialogService, new() { Id = Guid.NewGuid()}));
+                  _navigationService.NavigateTo(new EditAssistenteViewModel(_serviceProvider, _navigationService, _dialogService, this, new() { Id = Guid.NewGuid()}));
             }
       }
 }

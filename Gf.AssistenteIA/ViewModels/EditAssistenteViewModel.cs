@@ -9,6 +9,7 @@ namespace Gf.AssistenteIA.ViewModels
       public class EditAssistenteViewModel : ViewModelBase
       {
 
+            private readonly IServiceProvider _serviceProvider;
             private readonly INavigationService _navigationService;
             private readonly IDialogService _dialogService;
 
@@ -17,10 +18,12 @@ namespace Gf.AssistenteIA.ViewModels
             {
                   Assistente = new() { Titulo = "Assistente 1", Descricao = "Descrição do assistente"};
             }
-            public EditAssistenteViewModel(INavigationService navigationService, IDialogService dialogService, AssistenteModel assistente)
+            public EditAssistenteViewModel(IServiceProvider serviceProvider, INavigationService navigationService, IDialogService dialogService, ViewModelBase backViewModel, AssistenteModel assistente)
             {
+                  _serviceProvider = serviceProvider;
                   _navigationService = navigationService;
                   _dialogService = dialogService;
+                  BackViewModel = backViewModel;
                   Assistente = assistente;
                   CancelCommand = new RelayCommand(Cancel);
                   SaveCommand = new RelayCommand(Save);
@@ -28,6 +31,11 @@ namespace Gf.AssistenteIA.ViewModels
                   Titulo = "Assistente";
             }
 
+            public ViewModelBase BackViewModel
+            {
+                  get => Get<ViewModelBase>();
+                  set => Set(value);
+            }
             public AssistenteModel Assistente
             {
                   get => Get<AssistenteModel>();
@@ -39,7 +47,7 @@ namespace Gf.AssistenteIA.ViewModels
 
             private void Cancel(object arg)
             {
-                  _navigationService.NavigateTo(new AssistentesViewModel(_navigationService, _dialogService));
+                  _navigationService.NavigateTo(BackViewModel);
             }
             private void Save(object arg)
             {
@@ -48,7 +56,7 @@ namespace Gf.AssistenteIA.ViewModels
                         var repository = new FileAssistantRepository();
                         repository.AddUpdate(Assistente);
 
-                        _navigationService.NavigateTo(new AssistentesViewModel(_navigationService, _dialogService));
+                        _navigationService.NavigateTo(BackViewModel);
                   }
                   catch (Exception ex)
                   {

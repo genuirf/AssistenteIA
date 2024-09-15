@@ -16,11 +16,29 @@ namespace Gf.AssistenteIA.Views
                   InitializeComponent();
 
                   DataContextChanged += ChatView_DataContextChanged;
+                  Loaded += ChatView_Loaded;
+            }
+
+            private void ChatView_Loaded(object sender, RoutedEventArgs e)
+            {
+                  Keyboard.Focus(TbQuestao);
+                  TbQuestao.Focus();
             }
 
             private void ChatView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
             {
                   model = (ChatViewModel)DataContext;
+                  if (model == null) return;
+
+                  model.onResponseFinalized = () =>
+                  {
+                        Keyboard.Focus(TbQuestao);
+                        TbQuestao.Focus();
+                  };
+                  model.onGereratingResponse = () =>
+                  {
+                        scrollViewerMensagens.ScrollToBottom();
+                  };
             }
 
             private ChatViewModel model;

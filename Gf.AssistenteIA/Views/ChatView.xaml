@@ -106,7 +106,18 @@
                                                        Height="20" />
                                     </WrapPanel>
                               </Button>
-
+                              <Button Command="{Binding EditAssistenteCommand}"
+                                      Style="{StaticResource ButtonRoundedInverse}"
+                                      HorizontalAlignment="Right"
+                                      Width="130">
+                                    <WrapPanel>
+                                          <TextBlock Text="Editar"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,6,0" />
+                                          <icon:Settings Width="20"
+                                                       Height="20" />
+                                    </WrapPanel>
+                              </Button>
                         </WrapPanel>
                         <Button Command="{Binding NavigateToHomeCommand}"
                                 Style="{StaticResource ButtonRoundedInverse}"
@@ -121,37 +132,38 @@
                               </WrapPanel>
                         </Button>
                   </Grid>
-                  <ScrollViewer Grid.Row="1">
-                        <ScrollViewer x:Name="scrollViewerMensagens">
-                              <ItemsControl ItemsSource="{Binding CurrentChat.Mensagens}">
-                                    <ItemsControl.ItemTemplate>
-                                          <DataTemplate>
-                                                <Border Margin="2"
-                                                        CornerRadius="4"
-                                                        BorderThickness="1"
-                                                        BorderBrush="{StaticResource DisabledBrush}">
-                                                      <StackPanel>
-                                                            <Label FontWeight="Bold">Você:</Label>
-                                                            <TextBlock Text="{Binding MensagemUsuario}"
-                                                                       Style="{StaticResource Texto1}"
-                                                                       Margin="5, 0" />
-                                                            <Rectangle  Margin="2"
-                                                                        Height="1"
-                                                                        Fill="{StaticResource SecondaryBrush}" />
-                                                            <Label FontWeight="Bold">Assistente:</Label>
-                                                            <TextBox Text="{Binding MensagemAssistente}"
-                                                                     Height="Auto"
-                                                                     IsReadOnly="True"
-                                                                     BorderThickness="0"
-                                                                     VerticalScrollBarVisibility="Disabled"
-                                                                     TextWrapping="WrapWithOverflow"
-                                                                     PreviewMouseWheel="TextBox_PreviewMouseWheel" />
-                                                      </StackPanel>
-                                                </Border>
-                                          </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                              </ItemsControl>
-                        </ScrollViewer>
+                  <ScrollViewer x:Name="scrollViewerMensagens"
+                                Grid.Row="1">
+                        <ItemsControl ItemsSource="{Binding CurrentChat.Mensagens}">
+                              <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                          <Border Margin="2"
+                                                  CornerRadius="4"
+                                                  BorderThickness="1"
+                                                  BorderBrush="{StaticResource DisabledBrush}">
+                                                <StackPanel>
+                                                      <Label FontWeight="Bold">Você:</Label>
+                                                      <TextBox Text="{Binding MensagemUsuario}"
+                                                               Height="Auto"
+                                                               IsReadOnly="True"
+                                                               BorderThickness="0"
+                                                               TextWrapping="WrapWithOverflow"
+                                                               PreviewMouseWheel="TextBox_PreviewMouseWheel" />
+                                                      <Rectangle  Margin="2"
+                                                                  Height="1"
+                                                                  Fill="{StaticResource SecondaryBrush}" />
+                                                      <Label FontWeight="Bold">Assistente:</Label>
+                                                      <TextBox Text="{Binding MensagemAssistente}"
+                                                               Height="Auto"
+                                                               IsReadOnly="True"
+                                                               BorderThickness="0"
+                                                               TextWrapping="WrapWithOverflow"
+                                                               PreviewMouseWheel="TextBox_PreviewMouseWheel" />
+                                                </StackPanel>
+                                          </Border>
+                                    </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                   </ScrollViewer>
                   <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>

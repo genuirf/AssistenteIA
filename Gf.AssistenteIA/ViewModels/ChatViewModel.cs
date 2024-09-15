@@ -18,6 +18,9 @@ namespace Gf.AssistenteIA.ViewModels
             private readonly IDialogService _dialogService;
             private IAssistenteService _apiService;
 
+            public Action? onResponseFinalized {  get; set; }
+            public Action? onGereratingResponse {  get; set; }
+
             // Construtor sem parâmetros para o modo design
             public ChatViewModel()
             {
@@ -34,6 +37,7 @@ namespace Gf.AssistenteIA.ViewModels
                   Assistente = assistente;
                   CurrentChat = new();
                   AddDocumentsCommand = new RelayCommand(AddDocuments, CanAddDocuments);
+                  EditAssistenteCommand = new RelayCommand(EditAssistente, CanEditAssistente);
                   NavigateToHomeCommand = new RelayCommand(NavigateToAssistentes);
                   AddChatCommand = new RelayCommand(AddChat, CanAddChat);
                   EditChatCommand = new RelayCommand(EditChat, CanEditChat);
@@ -70,6 +74,7 @@ namespace Gf.AssistenteIA.ViewModels
             }
 
             public ICommand AddDocumentsCommand { get; }
+            public ICommand EditAssistenteCommand { get; }
             public ICommand NavigateToHomeCommand { get; }
             public ICommand AddChatCommand { get; }
             public ICommand EditChatCommand { get; }
@@ -94,16 +99,26 @@ namespace Gf.AssistenteIA.ViewModels
 
             private void AddDocuments(object arg)
             {
-
+                  _navigationService.NavigateTo(new DocsAssistenteViewModel(_serviceProvider, _navigationService, _dialogService, this, Assistente));
             }
             private bool CanAddDocuments(object arg)
             {
                   return !GeneratingResponse;
             }
+
+            private void EditAssistente(object parameter)
+            {
+                  _navigationService.NavigateTo(new EditAssistenteViewModel(_serviceProvider, _navigationService, _dialogService, this, Assistente));
+            }
+            private bool CanEditAssistente(object arg)
+            {
+                  return !GeneratingResponse;
+            }
+
             private void NavigateToAssistentes(object arg)
             {
                   StopResponse(null);
-                  _navigationService.NavigateTo(new AssistentesViewModel(_navigationService, _dialogService));
+                  _navigationService.NavigateTo(new AssistentesViewModel(_serviceProvider, _navigationService, _dialogService));
             }
             private void AddChat(object arg)
             {
@@ -141,9 +156,9 @@ namespace Gf.AssistenteIA.ViewModels
             public async Task LoadEmbeddings()
             {
                   var embeddingService = App.ServiceProvider.GetRequiredService<EmbeddingService>();
-                  embeddings = await embeddingService.LoadAllEmbeddingsAsync(Assistente.Id);
+                  embeddings = (await embeddingService.LoadAllFilesEmbeddingsAsync(Assistente.Id)).Where(e=> e.Embedding != null && e.Embedding.Length > 0).ToList();
             }
-            public Dictionary<string, float[]> embeddings = new();
+            public List<FileEmbeddingData> embeddings = new();
 
             private async Task GerarTitulo()
             {
@@ -176,8 +191,6 @@ namespace Gf.AssistenteIA.ViewModels
 
                   StringBuilder stringBuilder = new();
 
-                  if (Assistente.Instrucoes?.Length > 0) stringBuilder.AppendLine(Assistente.Instrucoes);
-
                   List<CosineSimilarityInfo> contextosSimilares = new();
  
                   float[] queryEmbedding = [];
@@ -185,32 +198,35 @@ namespace Gf.AssistenteIA.ViewModels
                   if (embeddings.Count > 0)
                   {
                         queryEmbedding = await _apiService.GetEmbeddingAsync(Questao, TimeSpan.FromSeconds(10));
-                        foreach (var (doc, embedding) in embeddings)
+                        foreach (var embedding in embeddings)
                         {
-                              double similarity = Funcoes.ComputeCosineSimilarity(queryEmbedding, embedding);
-                              if (similarity > 0.6)
+                              double similarity = Funcoes.ComputeCosineSimilarity(queryEmbedding, embedding.Embedding);
+                              if (similarity > Assistente.ContextSimilarity)
                               {
-                                    contextosSimilares.Add(new(similarity, doc));
+                                    contextosSimilares.Add(new(similarity, embedding.FileContent));
                               }
                         }
                   }
 
-                  if (contextosSimilares.Count < 1)
+                  if (contextosSimilares.Count < 1 && Assistente.InstrucoesSemContexto?.Length > 0)
                   {
-                        if (Assistente.InstrucoesSemContexto?.Length > 0)
-                        {
-                              stringBuilder.AppendLine(Assistente.InstrucoesSemContexto);
-                        }
+                        stringBuilder.AppendLine(Assistente.InstrucoesSemContexto);
                   }
-                  else
+                  else if (contextosSimilares.Count > 0)
                   {
+
+                        if (Assistente.Instrucoes?.Length > 0) stringBuilder.AppendLine(Assistente.Instrucoes);
+
                         int count = 1;
                         foreach (var doc in contextosSimilares.OrderByDescending(r => r.similarity).Take(2).Select(r => r.doc))
                         {
                               stringBuilder.AppendLine($"[CONTEXT {count}]\n{doc}\n[END CONTEXT {count}]\n\n");
                               count++;
                         }
-
+                  }
+                  else
+                  {
+                        if (Assistente.Instrucoes?.Length > 0) stringBuilder.AppendLine(Assistente.Instrucoes);
                   }
 
                   contexto.contexto = stringBuilder.ToString();
@@ -237,6 +253,7 @@ namespace Gf.AssistenteIA.ViewModels
                         string resposta = await _apiService.SendQuestionAsync(Assistente, mensagem.MensagemUsuario, historico, contexto.contexto, (resp) =>
                         {
                               mensagem.MensagemAssistente = $"{mensagem.MensagemAssistente}{resp}";
+                              onGereratingResponse?.Invoke();
                         }, async () =>
                         {
                               GeneratingResponse = false;
@@ -244,6 +261,8 @@ namespace Gf.AssistenteIA.ViewModels
                               {
                                     await GerarTitulo();
                               }
+
+                              onResponseFinalized?.Invoke();
                         });
 
                   }
@@ -261,7 +280,7 @@ namespace Gf.AssistenteIA.ViewModels
             }
             private void StopResponse(object arg)
             {
-
+                  _apiService.StopResponse();
             }
             private bool CanStopResponse(object arg)
             {

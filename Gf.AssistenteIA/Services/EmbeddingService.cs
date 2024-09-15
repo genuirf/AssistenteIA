@@ -1,13 +1,29 @@
 ﻿using Gf.AssistenteIA.Models;
+using Microsoft.Extensions.Logging.Abstractions;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Windows.Controls;
 
 namespace ChatIA.Model.Recursos
 {
       public class EmbeddingService
       {
             private readonly string fileEmbedding = "embeddings.json";
+            private static string GetDirectoryEmbedding(Guid assistente_id)
+            {
+                  return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "embeddings", assistente_id.ToString());
+            }
+            public void SaveFile(Guid assistente_id, string file)
+            {
+                  FileInfo fileInfo = new(file);
+                  FileInfo filePath = new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "embeddings", assistente_id.ToString(), fileInfo.Name));
+                  if (!filePath.Directory.Exists)
+                  {
+                        filePath.Directory.Create();
+                  }
+                  fileInfo.CopyTo(filePath.FullName, true);
+            }
             public async Task SaveEmbeddingAsync(Guid assistente_id, string fileName, float[] embedding)
             {
                   FileInfo filePath = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "embeddings", assistente_id.ToString(), fileEmbedding));
@@ -35,44 +51,42 @@ namespace ChatIA.Model.Recursos
                   var jsonString = JsonSerializer.Serialize(embeddings, new JsonSerializerOptions { WriteIndented = true });
                   await File.WriteAllTextAsync(filePath.FullName, jsonString);
             }
-            public async Task<float[]> LoadEmbeddingAsync(Guid assistente_id, string fileName)
+            public async Task<List<FileEmbeddingData>> LoadAllFilesEmbeddingsAsync(Guid assistente_id)
             {
-                  FileInfo filePath = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "embeddings", assistente_id.ToString(), fileEmbedding));
+                  FileInfo filePath = new FileInfo(Path.Combine(GetDirectoryEmbedding(assistente_id), fileEmbedding));
                   if (!filePath.Exists)
                   {
-                        return null; // Arquivo não encontrado
+                        return []; // Arquivo não encontrado, retorna um dicionário vazio
                   }
 
-                  var json = await File.ReadAllTextAsync(filePath.FullName);
-                  var embeddings = JsonSerializer.Deserialize<Dictionary<string, EmbeddingData>>(json);
+                  var result = new List<FileEmbeddingData>();
 
-                  if (embeddings != null && embeddings.ContainsKey(fileName))
+                  // listar todos arquivos na pasta
+                  var files = filePath.Directory.GetFiles("*.txt");
+                  foreach (var file in files)
                   {
-                        return embeddings[fileName].Embedding;
-                  }
-
-                  return null; // Nome do arquivo não encontrado
-            }
-            public async Task<Dictionary<string, float[]>> LoadAllEmbeddingsAsync(Guid assistente_id)
-            {
-                  FileInfo filePath = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "embeddings", assistente_id.ToString(), fileEmbedding));
-                  if (!filePath.Exists)
-                  {
-                        return new Dictionary<string, float[]>(); // Arquivo não encontrado, retorna um dicionário vazio
+                        result.Add(new() { FileContent = File.ReadAllText(file.FullName, UTF8Encoding.Default), fileName = file.Name });
                   }
 
                   var json = await File.ReadAllTextAsync(filePath.FullName);
 
                   // Desserializar o arquivo JSON para um dicionário
-                  var embeddings = JsonSerializer.Deserialize<Dictionary<string, EmbeddingData>>(json);
+                  var embeddings = JsonSerializer.Deserialize<Dictionary<string, EmbeddingData>>(json) ?? [];
 
-                  // Converter de EmbeddingData para float[]
-                  var result = new Dictionary<string, float[]>();
                   foreach (var kvp in embeddings)
                   {
-                        if (!File.Exists(kvp.Key)) { continue; }
-                        var doc = File.ReadAllText(kvp.Key, UTF8Encoding.Default);
-                        result[doc] = kvp.Value.Embedding;
+                        string file = Path.Combine(GetDirectoryEmbedding(assistente_id), kvp.Key);
+                        if (!File.Exists(file)) { continue; }
+
+                        var item = result.FirstOrDefault(f=> f.fileName == kvp.Key);
+                        if (item == null)
+                        {
+                              item = new() { Embedding = kvp.Value.Embedding, fileName = kvp.Key };
+                              result.Add(item);
+                        }
+
+                        item.Embedding = kvp.Value.Embedding;
+                        item.check = kvp.Value.Embedding != null && kvp.Value.Embedding.Length > 0;
                   }
 
                   return result;
