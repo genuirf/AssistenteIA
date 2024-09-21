@@ -33,10 +33,11 @@ namespace Gf.AssistenteIA.Services
                   _token = token;
             }
 
-            private Body GetBody(string questao, List<MensagemModel> historico, string? contextEmbedding, double temperature)
+            private Body GetBody(string questao, List<MensagemModel> historico, string? contextEmbedding, double temperature, int max_tokens)
             {
                   var body = new Body();
                   body.temperature = temperature;
+                  body.max_tokens = max_tokens;
                   foreach (var msg in historico)
                   {
                         body.messages.Add(new() { role = "user", content = msg.MensagemUsuario });
@@ -55,7 +56,7 @@ namespace Gf.AssistenteIA.Services
 
             public async Task<string> SendQuestionAsync(AssistenteModel assistente, string questao, List<MensagemModel> historico, string? contextEmbedding, Action<string> onStreamMsg, Action onStop)
             {
-                  var body = GetBody(questao, historico, contextEmbedding, assistente.Temperature);
+                  var body = GetBody(questao, historico, contextEmbedding, assistente.Temperature, assistente.MaxTokens);
 
                   HttpClient client = new();
                   if (_token == null)

@@ -10,73 +10,83 @@
              d:DesignHeight="600"
              d:DesignWidth="900"
              d:DataContext="{d:DesignInstance vm:EditAssistenteViewModel, IsDesignTimeCreatable=True}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <StackPanel>
-            <Label>Nome do Assistente</Label>
-            <TextBox Text="{Binding Assistente.Titulo}" />
-            <Label>Descrição</Label>
-            <TextBox Text="{Binding Assistente.Descricao}"/>
-            <Label>Instruções para o Assistente</Label>
-            <TextBox Text="{Binding Assistente.Instrucoes}"
-                     AcceptsReturn="True"
-                     Height="100"
-                     TextWrapping="WrapWithOverflow"
-                     VerticalContentAlignment="Top"/>
-            <Label>Instruções para quando não houver contexto encontrado</Label>
-            <TextBox Text="{Binding Assistente.InstrucoesSemContexto}"
-                     AcceptsReturn="True"
-                     Height="100"
-                     TextWrapping="WrapWithOverflow"
-                     VerticalContentAlignment="Top"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <Label>API Url (LM Studio | Ex.: http://localhost:1234)</Label>
-                    <TextBox Text="{Binding Assistente.Api_Url}" />
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <Label>Temperature (Padrão 0,7)</Label>
-                    <TextBox Text="{Binding Assistente.Temperature, ConverterCulture=pt-BR, StringFormat=N1, Converter={StaticResource cv_Numero}}" />
-                </StackPanel>
-                <StackPanel Grid.Column="2">
-                    <Label>Nível de Similaridade de Contexto (0,00 até 1,00)</Label>
-                    <TextBox Text="{Binding Assistente.ContextSimilarity, ConverterCulture=pt-BR, StringFormat=N2, Converter={StaticResource cv_Numero}}" />
-                </StackPanel>
-            </Grid>
-        </StackPanel>
+      <Grid>
+            <Grid.RowDefinitions>
+                  <RowDefinition />
+                  <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                  <Label>Nome do Assistente</Label>
+                  <TextBox Text="{Binding Assistente.Titulo}" />
+                  <Label>Descrição</Label>
+                  <TextBox Text="{Binding Assistente.Descricao}" />
+                  <Label>Instruções para o Assistente</Label>
+                  <TextBox Text="{Binding Assistente.Instrucoes}"
+                           AcceptsReturn="True"
+                           Height="100"
+                           TextWrapping="WrapWithOverflow"
+                           VerticalContentAlignment="Top" />
+                  <Label>Instruções para quando não houver contexto encontrado</Label>
+                  <TextBox Text="{Binding Assistente.InstrucoesSemContexto}"
+                           AcceptsReturn="True"
+                           Height="100"
+                           TextWrapping="WrapWithOverflow"
+                           VerticalContentAlignment="Top" />
+                  <Grid>
+                        <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="1.5*" />
+                              <ColumnDefinition />
+                              <ColumnDefinition Width="Auto" />
+                              <ColumnDefinition />
+                              <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                              <Label>API Url (LM Studio | Ex.: http://localhost:1234)</Label>
+                              <TextBox Text="{Binding Assistente.Api_Url}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                              <Label>Temperature (Padrão 0,7)</Label>
+                              <TextBox Text="{Binding Assistente.Temperature, ConverterCulture=pt-BR, StringFormat=N1, Converter={StaticResource cv_Numero}}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                              <Label>Nível de Similaridade de Contexto (0,00 até 1,00)</Label>
+                              <TextBox Text="{Binding Assistente.ContextSimilarity, ConverterCulture=pt-BR, StringFormat=N2, Converter={StaticResource cv_Numero}}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="3">
+                              <Label>Máx. Tokens</Label>
+                              <TextBox Text="{Binding Assistente.MaxTokens, ConverterCulture=pt-BR, StringFormat=N0, Converter={StaticResource cv_Numero}}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                              <Label>Limite de mensagens</Label>
+                              <TextBox Text="{Binding Assistente.LimiteHistorico, ConverterCulture=pt-BR, StringFormat=N0, Converter={StaticResource cv_Numero}}" />
+                        </StackPanel>
+                  </Grid>
+            </StackPanel>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Button Command="{Binding CancelCommand}"
-                    Style="{StaticResource ButtonRoundedInverse}"
-                    Width="140"
-                    Grid.Column="1">
-                <WrapPanel>
-                    <TextBlock Text="Cancelar" />
-                </WrapPanel>
-            </Button>
-            <Button Command="{Binding SaveCommand}"
-                    Width="140"
-                    Grid.Column="2">
-                <WrapPanel>
-                    <TextBlock Text="Salvar"/>
-                    <icon:Check Width="16"
-                                Height="16"
-                                Margin="8 0 0 0"/>
-                </WrapPanel>
-            </Button>
-        </Grid>
-    </Grid>
+            <Grid Grid.Row="1">
+                  <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <Button Command="{Binding CancelCommand}"
+                          Style="{StaticResource ButtonRoundedInverse}"
+                          Width="140"
+                          Grid.Column="1">
+                        <WrapPanel>
+                              <TextBlock Text="Cancelar" />
+                        </WrapPanel>
+                  </Button>
+                  <Button Command="{Binding SaveCommand}"
+                          Width="140"
+                          Grid.Column="2">
+                        <WrapPanel>
+                              <TextBlock Text="Salvar" />
+                              <icon:Check Width="16"
+                                          Height="16"
+                                          Margin="8 0 0 0" />
+                        </WrapPanel>
+                  </Button>
+            </Grid>
+      </Grid>
 </UserControl>

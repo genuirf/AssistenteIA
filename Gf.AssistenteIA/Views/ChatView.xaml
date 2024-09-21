@@ -145,7 +145,7 @@
                                                       <Label FontWeight="Bold">Você:</Label>
                                                       <TextBox Text="{Binding MensagemUsuario}"
                                                                Height="Auto"
-                                                               IsReadOnly="True"
+                                                               AcceptsReturn="True"
                                                                BorderThickness="0"
                                                                TextWrapping="WrapWithOverflow"
                                                                PreviewMouseWheel="TextBox_PreviewMouseWheel" />
@@ -155,7 +155,7 @@
                                                       <Label FontWeight="Bold">Assistente:</Label>
                                                       <TextBox Text="{Binding MensagemAssistente}"
                                                                Height="Auto"
-                                                               IsReadOnly="True"
+                                                               AcceptsReturn="True"
                                                                BorderThickness="0"
                                                                TextWrapping="WrapWithOverflow"
                                                                PreviewMouseWheel="TextBox_PreviewMouseWheel" />
@@ -175,6 +175,7 @@
                                  Text="{Binding CurrentChat.Questao, UpdateSourceTrigger=PropertyChanged}"
                                  IsReadOnly="{Binding GeneratingResponse}"
                                  Height="60"
+                                 AcceptsReturn="True"
                                  VerticalContentAlignment="Top"
                                  TextWrapping="WrapWithOverflow"
                                  VerticalScrollBarVisibility="Auto"

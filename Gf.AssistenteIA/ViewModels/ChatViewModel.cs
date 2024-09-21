@@ -96,6 +96,13 @@ namespace Gf.AssistenteIA.ViewModels
                   lista.AddRange(CurrentChat.Mensagens);
                   return lista;
             }
+            private void CheckHistorico()
+            {
+                  while (Assistente.LimiteHistorico > 0 && CurrentChat.Mensagens.Count > Assistente.LimiteHistorico)
+                  {
+                        CurrentChat.Mensagens.RemoveAt(0);
+                  }
+            }
 
             private void AddDocuments(object arg)
             {
@@ -236,6 +243,8 @@ namespace Gf.AssistenteIA.ViewModels
 
             private async void SendMsg(object arg)
             {
+                  if (CurrentChat.Questao?.Length < 1) return;
+
                   try
                   {
                         GeneratingResponse = true;
@@ -263,6 +272,7 @@ namespace Gf.AssistenteIA.ViewModels
                               }
 
                               onResponseFinalized?.Invoke();
+                              CheckHistorico();
                         });
 
                   }

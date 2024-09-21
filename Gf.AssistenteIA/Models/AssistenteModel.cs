@@ -47,5 +47,15 @@
                   get => Get<double>();
                   set => Set(value);
             }
+            public int MaxTokens
+            {
+                  get => Get<int>();
+                  set => Set(value);
+            }
+            public int LimiteHistorico
+            {
+                  get => Get<int>();
+                  set => Set(value);
+            }
       }
 }

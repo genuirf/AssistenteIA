@@ -41,8 +41,10 @@ namespace Gf.AssistenteIA.ViewModels
                   Load();
             }
 
-            private void Load()
+            public void Load()
             {
+                  Assistentes.Clear();
+
                   var repository = new Repositories.FileAssistantRepository();
 
                   foreach (var item in repository.GetAll())
@@ -129,7 +131,7 @@ namespace Gf.AssistenteIA.ViewModels
 
             private void AddAssitente(object parameter)
             {
-                  _navigationService.NavigateTo(new EditAssistenteViewModel(_serviceProvider, _navigationService, _dialogService, this, new() { Id = Guid.NewGuid()}));
+                  _navigationService.NavigateTo(new EditAssistenteViewModel(_serviceProvider, _navigationService, _dialogService, this, new() { Id = Guid.NewGuid(), Api_Url = "http://localhost:1234", Temperature = 0.7 }));
             }
       }
 }
