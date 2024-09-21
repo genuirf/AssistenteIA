@@ -13,6 +13,7 @@ Este projeto é um aplicativo de Assistente com Inteligência Artificial que per
   - **Instrução para Contexto Não Encontrado:** Mensagem exibida quando o assistente não encontra um contexto relevante para uma pergunta.
   - **Temperature:** Parâmetro que controla a criatividade das respostas da IA.
   - **Nível de Similaridade:** Valor calculado que indica o quão semelhante é o contexto fornecido (0.00 a 1.00).
+  - **Limite do Histórico de mensagens:** Indica quantas mensagens deve permanecer no histórico.
   - **API URL do LM Studio:** URL da API para comunicação com o LM Studio.
 
 ## Requisitos
