@@ -98,21 +98,24 @@
 
             <Grid Grid.Row="2">
                   <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                   </Grid.ColumnDefinitions>
+                  <CheckBox Margin="6" 
+                            IsChecked="{Binding MarcarTodos, UpdateSourceTrigger=PropertyChanged}">Todos</CheckBox>
                   <Button Command="{Binding CancelCommand}"
                           Style="{StaticResource ButtonRoundedInverse}"
                           Width="140"
-                          Grid.Column="1">
+                          Grid.Column="2">
                         <WrapPanel>
                               <TextBlock Text="Cancelar" />
                         </WrapPanel>
                   </Button>
                   <Button Command="{Binding SaveCommand}"
                           Width="140"
-                          Grid.Column="2">
+                          Grid.Column="3">
                         <WrapPanel>
                               <TextBlock Text="Salvar" />
                               <icon:Check Width="16"

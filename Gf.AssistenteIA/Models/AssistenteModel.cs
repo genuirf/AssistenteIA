@@ -42,6 +42,11 @@
                   get => Get<string>();
                   set => Set(value);
             }
+            public string ModelName
+        {
+                  get => Get<string>();
+                  set => Set(value);
+            }
             public double ContextSimilarity
             {
                   get => Get<double>();

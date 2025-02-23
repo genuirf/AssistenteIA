@@ -225,9 +225,9 @@ namespace Gf.AssistenteIA.ViewModels
                         if (Assistente.Instrucoes?.Length > 0) stringBuilder.AppendLine(Assistente.Instrucoes);
 
                         int count = 1;
-                        foreach (var doc in contextosSimilares.OrderByDescending(r => r.similarity).Take(2).Select(r => r.doc))
+                        foreach (var r in contextosSimilares.OrderByDescending(r => r.similarity).Take(30))
                         {
-                              stringBuilder.AppendLine($"[CONTEXT {count}]\n{doc}\n[END CONTEXT {count}]\n\n");
+                              stringBuilder.AppendLine($"[CONTEXT {count} MATCH {r.similarity:N2}]\n{r.doc}\n[END CONTEXT {count}]\n\n");
                               count++;
                         }
                   }

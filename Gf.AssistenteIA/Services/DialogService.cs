@@ -12,7 +12,7 @@ namespace Gf.AssistenteIA.Services
 
             public void Error(string message, Exception exception)
             {
-                  MessageBox.Show(message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                  MessageBox.Show($"{message}\n{exception.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
             }
       }
 }
